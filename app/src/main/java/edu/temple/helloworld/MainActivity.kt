@@ -13,6 +13,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var nameEditText: EditText
     lateinit var clickMeButton: Button
 
+    private var NAME_KEY = "name"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,5 +32,17 @@ class MainActivity : AppCompatActivity() {
             displayTextView.text = "Hello, ${nameEditText.text.toString()}"
 
         }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState.getString(NAME_KEY)?.run{
+            displayTextView.text = this
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(NAME_KEY, displayTextView.text.toString())
     }
 }
